@@ -1,12 +1,13 @@
 {
   "name": "softec-task",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "server": "json-server ./order-master-dp/index.js --port 3000 "
   },
   "private": true,
   "dependencies": {
