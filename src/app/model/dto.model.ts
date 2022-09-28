@@ -13,6 +13,12 @@ export interface OrderDto{
   Products: ProductOrderDto[],
   PaymentType: string
 }
+export interface AddOrderRequestDto{
+  OrderDate: string,
+  UserId: string,
+  Products: ProductOrderDto[],
+  PaymentType: string
+}
 
 export interface ProductOrderDto{
   ProductId: number,
