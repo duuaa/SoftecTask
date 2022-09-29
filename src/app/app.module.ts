@@ -6,21 +6,29 @@ import { AppComponent } from './app.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProductsComponent } from './components/products/products.component';
-import { OrderService } from './components/services/order-service/order.service';
-import { ProductService } from './components/services/product-service/product.service';
+
 import { HttpClientModule } from '@angular/common/http';
+import { OrderService } from './services/order-service/order.service';
+import { ProductService } from './services/product-service/product.service';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { SaveComponent } from './components/save/save.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponent,
     OrdersComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    SaveComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     OrderService,
