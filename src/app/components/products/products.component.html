@@ -1,3 +1,52 @@
-<p>
-  products works!
-</p>
+<div class="container mt-4">
+  <h2 class="mb-4">Products</h2>
+  <button type="button" class="btn btn-outline-success btn-lg m-2" (click)="navigateToOrders()">Go to all
+    orders</button>
+  <button type="button" class="btn btn-outline-success btn-lg m-2" (click)="activeAddMode()" [disabled]="addMode">Add
+    Order +</button>
+  <button *ngIf="addMode" type="button" class="btn btn-outline-success btn-lg m-2" (click)="saveOrder()">Save Order
+  </button>
+  <button *ngIf="addMode" type="button" class="btn btn-outline-success btn-lg m-2" (click)="cancelOrder()">Cancel Order
+  </button>
+  <div class="card m-3" *ngIf="addMode">
+    <div class="card-header">
+      New Products
+    </div>
+
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let item of newOrder.Products" class="list-group-item">
+        Product Id: {{item.ProductId}} - Quantity: {{item.Quantity}}
+      </li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div *ngFor="let i = index; let product of products" class="card col-md-3 col-sm-4"
+      [style.background]="product.AvailablePieces< 10?'#e1e1e1':'#FFFFF'">
+      <img class="card-img-top mt-2" [src]="product.ProductImg" alt="product img">
+      <div class="card-body">
+        <h5 class="card-title"> {{product.ProductName}}</h5>
+        <p class="card-text">Quantity: {{product.AvailablePieces - takenQuantity(i)}}</p>
+        <p class="card-text">Price: ${{product.ProductPrice}}</p>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" [disabled]="addMode" type="button"
+              (click)="editQuantity(i,quantity.value)">Edit
+              Quantity</button>
+          </div>
+          <input #quantity type="number" [disabled]="addMode" class="form-control"
+            [value]="product.AvailablePieces - takenQuantity(i)">
+        </div>
+        <span *ngIf="product.AvailablePieces< 10" style="color: red;"> less than 10 left</span>
+        <div class="input-group mb-3" *ngIf="addMode">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button" (click)="addToOrder(i,wantedQuantity.value)">Add To
+              Order</button>
+          </div>
+          <input #wantedQuantity type="number" class="form-control" [value]="1">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

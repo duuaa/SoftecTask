@@ -13,7 +13,7 @@ export class OrderService {
     return this.http.get<OrderDto[]>(ordersAPI);
   }
   getOrderById(id: number): Observable<OrderDto>{
-    return this.http.get<OrderDto>(ordersAPI + `${id}`);
+    return this.http.get<OrderDto>(ordersAPI + `/${id}`);
   }
   addOrder(order: AddOrderRequestDto): Observable<OrderDto>{
     return this.http.put<OrderDto>(ordersAPI , order);
