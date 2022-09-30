@@ -7,6 +7,7 @@ import { SaveComponent } from './components/save/save.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'products', component: ProductsComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'orders/:id',     component: OrderDetailsComponent },
