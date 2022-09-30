@@ -16,6 +16,6 @@ export class OrderService {
     return this.http.get<OrderDto>(ordersAPI + `/${id}`);
   }
   addOrder(order: AddOrderRequestDto): Observable<OrderDto>{
-    return this.http.put<OrderDto>(ordersAPI , order);
+    return this.http.post<OrderDto>(ordersAPI  , order);
   }
 }
