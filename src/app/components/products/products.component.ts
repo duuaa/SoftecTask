@@ -1,8 +1,9 @@
 import { ProductDto, AddOrderRequestDto } from './../../model/dto.model';
 import { ProductService } from './../../services/product-service/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 
 
@@ -11,32 +12,39 @@ import Swal from 'sweetalert2';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   products:ProductDto[] = [];
   addMode: boolean = false;
-  newOrder: AddOrderRequestDto ={
+  newOrder: AddOrderRequestDto = {
     OrderDate: "",
     UserId: "",
     Products: [],
     PaymentType: ""
   };
-  constructor(private productService: ProductService, private router : Router) { }
+  componentSubscripitions : Array<Subscription> = [];
+
+  constructor(private productService: ProductService, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.componentSubscripitions.forEach((subscription: Subscription)=>{
+      subscription.unsubscribe();
+    })
+  }
 
   ngOnInit() {
     this.getAllProducts()
   }
-  getAllProducts():void{
-    this.productService.getProducts().subscribe((response)=>{
+  getAllProducts(): void{
+    this.componentSubscripitions.push(this.productService.getProducts().subscribe((response)=>{
       this.products = response;
-    })
+    }));
   }
   editQuantity(index: number,quantity: string ){
     this.products[index] .AvailablePieces = parseInt(quantity);
-    this.productService.editProductQuantity(this.products[index].id, parseInt(quantity))
+    this.componentSubscripitions.push(this.productService.editProductQuantity(this.products[index].id, parseInt(quantity))
     .subscribe((updatedProduct)=>{
       this.products[index] =updatedProduct;
-    })
-
+    }));
   }
   navigateToOrders(){
     this.router.navigateByUrl(`orders`);
@@ -68,8 +76,8 @@ export class ProductsComponent implements OnInit {
     }
   }
   takenQuantity(index: number): number{
-   var existProduct = this.newOrder.Products.filter(product=> product.ProductId== this.products[index].id);
-   return existProduct.length ? existProduct[0].Quantity : 0
+    var existProduct = this.newOrder.Products.filter(product=> product.ProductId== this.products[index].id);
+    return existProduct.length ? existProduct[0].Quantity : 0
   }
   cancelOrder(): void{
    this.addMode = false;

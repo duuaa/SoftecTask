@@ -13,6 +13,7 @@ import { ProductService } from './services/product-service/product.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { SaveComponent } from './components/save/save.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SaveComponent } from './components/save/save.component';
     ProductsComponent,
     OrdersComponent,
     OrderDetailsComponent,
-    SaveComponent
+    SaveComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
